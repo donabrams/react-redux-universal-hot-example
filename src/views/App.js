@@ -20,7 +20,7 @@ class App extends Component {
     user: PropTypes.object,
     logout: PropTypes.func,
     count: PropTypes.number,
-    incremenet: PropTypes.func
+    increment: PropTypes.func
   }
 
   static contextTypes = {
