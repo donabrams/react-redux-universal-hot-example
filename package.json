@@ -10,26 +10,26 @@
   },
   "homepage": "https://github.com/erikras/react-redux-universal-hot-example",
   "keywords": [
-    "react",
-    "isomorphic",
-    "universal",
-    "webpack",
+    "babel",
+    "boilerplate",
     "express",
     "hot reloading",
+    "isomorphic",
+    "react",
     "react-hot-reloader",
     "redux",
     "starter",
-    "boilerplate",
-    "babel"
+    "universal",
+    "webpack"
   ],
   "main": "babel.server.js",
   "scripts": {
-    "start": "NODE_PATH=\"./src\" NODE_ENV=\"production\" PORT=\"8080\" node ./babel.server",
     "build": "node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack/prod.config.js",
+    "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client\" \"npm run start-dev\"",
     "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc src",
+    "start": "NODE_PATH=\"./src\" NODE_ENV=\"production\" PORT=\"8080\" node ./babel.server",
     "start-dev": "NODE_PATH=\"./src\" NODE_ENV=\"development\" node ./babel.server",
-    "watch-client": "UV_THREADPOOL_SIZE=100 NODE_PATH=\"./src\" node webpack/webpack-dev-server.js",
-    "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client\" \"npm run start-dev\""
+    "watch-client": "UV_THREADPOOL_SIZE=100 NODE_PATH=\"./src\" node webpack/webpack-dev-server.js"
   },
   "dependencies": {
     "babel": "5.4.7",
@@ -40,6 +40,7 @@
     "express-session": "^1.11.3",
     "file-loader": "^0.8.4",
     "http-proxy": "^1.11.1",
+    "node-libs-browser": "^0.5.2",
     "piping": "0.1.8",
     "react": "0.13.3",
     "react-inline-css": "1.1.1",
@@ -72,8 +73,8 @@
     "sass-loader": "^1.0.2",
     "strip-loader": "^0.1.0",
     "style-loader": "^0.12.3",
-    "webpack": "^1.9.11",
-    "webpack-dev-server": "1.9.0"
+    "webpack": "^1.10.1",
+    "webpack-dev-server": "1.10.1"
   },
   "engines": {
     "node": ">=0.10.32"

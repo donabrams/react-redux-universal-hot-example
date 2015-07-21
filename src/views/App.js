@@ -7,6 +7,7 @@ import {isLoaded as isInfoLoaded} from '../reducers/info';
 import {isLoaded as isAuthLoaded} from '../reducers/auth';
 import {load as loadInfo} from '../actions/infoActions';
 import * as authActions from '../actions/authActions';
+import * as testActions from '../actions/testActions';
 import {load as loadAuth} from '../actions/authActions';
 import InfoBar from '../components/InfoBar';
 import {createTransitionHook} from '../universalRouter';
@@ -17,7 +18,9 @@ if (__CLIENT__) {
 class App extends Component {
   static propTypes = {
     user: PropTypes.object,
-    logout: PropTypes.func
+    logout: PropTypes.func,
+    count: PropTypes.number,
+    incremenet: PropTypes.func
   }
 
   static contextTypes = {
@@ -36,7 +39,7 @@ class App extends Component {
   }
 
   render() {
-    const {user} = this.props;
+    const {user, clickCount, increment} = this.props;
     return (
       <div className="container app">
         <div className="jumbotron">
@@ -61,6 +64,7 @@ class App extends Component {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/widgets">Widgets</Link></li>
               <li><Link to="/about">About Us</Link></li>
+              <li onClick={increment}>clickCount {clickCount}</li>
               {!user && <li><Link to="/login">Login</Link></li>}
               {user && <li className="logout-link"><a href="/logout" onClick={::this.handleLogout}>Logout</a></li>}
             </ul>
@@ -78,11 +82,13 @@ class App extends Component {
 }
 
 @connect(state => ({
-  user: state.auth.user
+  user: state.auth.user,
+  clickCount: state.test.count
 }))
 export default class AppContainer {
   static propTypes = {
     user: PropTypes.object,
+    clickCount: PropTypes.number,
     dispatch: PropTypes.func.isRequired
   }
 
@@ -98,8 +104,11 @@ export default class AppContainer {
   }
 
   render() {
-    const { user, dispatch } = this.props;
-    return <App user={user} {...bindActionCreators(authActions, dispatch)}>
+    const { user, clickCount, dispatch } = this.props;
+    return <App user={user}
+      clickCount={clickCount}
+      {...bindActionCreators(authActions, dispatch)}
+      {...bindActionCreators(testActions, dispatch)}>
       {this.props.children}
     </App>;
   }
